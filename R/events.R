@@ -42,7 +42,6 @@
 
 .startEventContainer<-'
 # Event container
-  div(class="container content-wrap",
     div(class="masonry-grid",
         div(class="event-card card-calendar",
 '
@@ -209,26 +208,26 @@ event_schedule<-function(eventDF){
   
   paste0(eventItemList,collapse=",")->allEventsCat
   
-  allEventsCat %>%
-    paste0(
-      'p(class="card-tag",
-              tag("i",
-                  list(
-                    class="fa fa-calendar",
-                    `aria-hidden`="true"
-                    )
-                  ),
-              "近期活動"
-              )',
-      ",",
-      .
-    ) -> eventCardContent
+  # allEventsCat %>%
+  #   paste0(
+  #     'p(class="card-tag",
+  #             tag("i",
+  #                 list(
+  #                   class="fa fa-calendar",
+  #                   `aria-hidden`="true"
+  #                   )
+  #                 ),
+  #             "近期活動"
+  #             )',
+  #     ",",
+  #     .
+  #   ) -> eventCardContent
   
-  eventCardContent %>%
+  allEventsCat %>%
     paste0(
       .startEventContainer,
       .,
-      ")))"
+      "))"
     ) -> eventSchedule
   
   return(eventSchedule)
@@ -250,7 +249,7 @@ event_schedule_scroll<-function(eventDF){
     paste0(
       .startEventContainer_scroll,
       .,
-      ")))"
+      "))"
     ) -> eventSchedule
   
   return(eventSchedule)

@@ -89,18 +89,10 @@ USR新聞 {data-width=300}
 
 ### <i class="fa fa-calendar" aria-hidden="true"></i> 近期活動 {#latestEvents}
 
-```{r,eval=F}
-source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R")
-event_schedule_scroll(eventDF) -> eventScheduleScroll
-eventScheduleScroll %>%
-  writeLines("html_scrollschedule.txt")
-eventScheduleScroll %>%
-  {eval(parse(text=.))}
-```
-
 ```{r}
 source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R")
-event_schedule(eventDF)  %>%
+event_schedule(eventDF)  -> html_eventSchedule
+html_eventSchedule %>%
   {eval(parse(text=.))}
 ```
 
