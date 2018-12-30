@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1546133370744.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1566659956",
+    "id" : "AD873977",
+    "lastKnownWriteTime" : 1546136942,
+    "last_content_update" : 1546136942035,
+    "path" : "~/Desktop/GitHub/NTPUSOC/Lobby_dashboard/lobby_flexdashboard.Rmd",
+    "project_path" : "lobby_flexdashboard.Rmd",
+    "properties" : {
+        "cursorPosition" : "58,29",
+        "docOutlineVisible" : "1",
+        "last_setup_crc32" : "C90A880Aed68b3e8",
+        "scrollLine" : "47",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

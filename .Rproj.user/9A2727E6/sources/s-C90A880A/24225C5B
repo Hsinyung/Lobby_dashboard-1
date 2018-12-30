@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1546057980577.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "122|45|162|0|\n169|28|197|0|\n201|34|234|0|\n",
+    "hash" : "3732381649",
+    "id" : "24225C5B",
+    "lastKnownWriteTime" : 1546130968,
+    "last_content_update" : 1546130968396,
+    "path" : "~/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R",
+    "project_path" : "R/events.R",
+    "properties" : {
+        "cursorPosition" : "49,29",
+        "docOutlineVisible" : "1",
+        "scrollLine" : "37",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

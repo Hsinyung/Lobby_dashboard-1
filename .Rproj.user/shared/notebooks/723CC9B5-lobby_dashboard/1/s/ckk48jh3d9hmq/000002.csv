@@ -1,0 +1,7 @@
+"0",".accuweatherAPI<-Sys.getenv(""accuweatherAPI"")"
+"0","""2515397"" %>%"
+"0","    paste0(""http://dataservice.accuweather.com/currentconditions/v1/"",.) %>%"
+"0","GET("
+"0","  query = list(apikey = .accuweatherAPI)"
+"0","  ) %>%"
+"0","  content() -> NewTaipeiCityInfo"

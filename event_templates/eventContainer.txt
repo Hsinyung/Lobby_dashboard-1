@@ -1,0 +1,13 @@
+# Event container
+  div(class="container content-wrap",
+    div(class="masonry-grid",
+        div(class="event-card card-calendar",
+            p(class="card-tag",
+              tag("i",
+                  list(
+                    class="fa fa-calendar",
+                    `aria-hidden`="true"
+                    )
+                  ),
+              "Events"
+              ),

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Events Listing Card</title>
+  <script src="https://use.fontawesome.com/2aa56eb85a.js"></script>
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div class="container content-wrap"><div class="masonry-grid">
+	<div class="event-card card-calendar">
+    <p class="card-tag"><i class="fa fa-calendar" aria-hidden="true"></i> Events</p>
+    <!-- start of new-event-->
+		<div class="calendar-item masonry-item">
+		  <!--(1)start of event-date-->
+	    <div class="event-date">
+		      <div class="date-only">
+			      <div class="month">Aug</div>
+			      <div class="day">12</div>
+			      <div class="clearbox"></div>
+		      </div>
+	      </div>
+	      <!--end of event date-->
+	     <!--(2) start of event-info -->
+	    <div class="event-info">
+		    <a class="event-title" href="{fullUrl}">
+            <h3>Candlelight Christmas Saga</h3>
+        </a>
+<!-- p( ), from event_pTag()
+        <p class="event-details">
+          <span class="location"><i class="fa fa-globe" aria-hidden="true"></i> Grace Baptist Church</span>
+          <br /><span class="time"><i class="fa fa-clock-o" aria-hidden="true"></i> 8:00pm</span>
+        </p>
+-->
+		    <div class="clearbox"></div>
+	    </div>
+	    <!--end of event-info -->
+    </div>
+    <!--end of new-event-->
+    <div class="calendar-item masonry-item">
+	    <div class="event-date">
+	      <div class="date-only">
+	        <div class="month">Sep</div>
+			      <div class="day">01</div>
+			      <div class="clearbox"></div>
+		      </div>
+	      </div>
+	      <div class="event-info">
+		      <a class="event-title" href="{fullUrl}">
+            <h3>Welcome to Fall with the AYHE I am a slightly longer title</h3>
+          </a>
+          <p class="event-details">
+            <span class="location"><i class="fa fa-globe" aria-hidden="true"></i> Home of George Smith and Hermione Granger</span>
+            <br /><span class="time"><i class="fa fa-clock-o" aria-hidden="true"></i> 4:30pm</span>
+          </p>
+		      <div class="clearbox"></div>
+	      </div>
+      </div>
+  </div>
+</div></div>
+  
+  
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+                div(class="event-info", 
+                    a(class="event-title",
+                      href=".eventHref",
+                      h3(".eventTitle")
+                      ),                  p(class="event-details",
+                      span(class="time",
+                           tag("i",
+                               list(
+                                 class="fa fa-clock",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "09:10"),br(),
+                      span(class="location",
+                           tag("i",
+                               list(
+                                 class="fa fa-globe",
+                                  `aria-hidden`="true")
+                               ),
+                           "社2F01"),br(),
+                      span(class="speaker",
+                           tag("i",
+                               list(
+                                 class="fas fa-chalkboard-teacher",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "黃菁瑜老師"),br(),
+                      span(class="association",
+                           tag("i",
+                               list(
+                                 class="fas fa-university",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "英國Bournemouth大學 助理教授")) )

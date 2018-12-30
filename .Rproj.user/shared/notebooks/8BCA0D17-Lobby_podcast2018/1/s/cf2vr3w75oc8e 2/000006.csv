@@ -1,0 +1,16 @@
+"0","div(
+ HTML('
+<video class=""centerimg"" poster=""img/group1.png"" controls>
+  <source src=""videos/group1.mp4"" type=""video/mp4"">
+Your browser does not support the video tag.
+</video>
+'),
+div(
+  img(src=""img/group1qr.png"")
+)
+) %>% tagList %>% as.character
+"
+"1","[1]"
+"1"," ""<div>\n  \n<video class=\""centerimg\"" poster=\""img/group1.png\"" controls>\n  <source src=\""videos/group1.mp4\"" type=\""video/mp4\"">\nYour browser does not support the video tag.\n</video>\n\n  <div>\n    <img src=\""img/group1qr.png\""/>\n  </div>\n</div>"""
+"1","
+"

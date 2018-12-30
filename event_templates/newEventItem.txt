@@ -1,0 +1,37 @@
+           ## new event item
+            div(class="calendar-item masonry-item",
+                div(class="event-date",
+                    div(class="date-only",
+                        div(class="month",
+                            ".month"),
+                        div(class="day",
+                            ".day"),
+                        div(class="clearbox")
+                        )
+                    ),
+                div(class="event-info",
+                    a(class="event-title",
+                      href=".eventHref",
+                      h3(".eventTitle")
+                      ),
+                    p(class="event-details",
+                      span(class="location",
+                           tag("i",
+                               list(
+                                 class="fa fa-globe",
+                                  `aria-hidden`="true")
+                               ),
+                           ".eventLocation"
+                           ),
+                      br(),
+                      span(class="time",
+                           tag("i",
+                               list(
+                                 class="fa fa-clock-o",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           ".eventTime")
+                      ),
+                    div(class="clearbox")
+                    )

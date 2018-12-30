@@ -1,0 +1,155 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: bootstrap
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard); library(htmltools); library(stringr)
+source("/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R")
+source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R")
+library(htmltools)
+library(ggplot2)
+library(tidyr)
+library(qrcode)
+ggqrcode <- function(text, color="black", alpha=1) {
+    pkg <- "qrcode"
+    require(pkg, character.only = TRUE)
+    x <- qrcode_gen(text, plotQRcode=F, dataOutput=T)
+    x <- as.data.frame(x)
+
+    y <- x
+    y$id <- rownames(y)
+    y <- gather_(y, "key", "value", colnames(y)[-ncol(y)])
+    y$key = factor(y$key, levels=rev(colnames(x)))
+    y$id = factor(y$id, levels=rev(rownames(x)))
+
+    ggplot(y, aes_(x=~id, y=~key)) + geom_tile(aes_(fill=~value), alpha=alpha) +
+        scale_fill_gradient(low="white", high=color) +
+        theme_void() + theme(legend.position='none')
+}
+```
+
+
+```{css css}
+.centerimg { 
+    position: relative;
+    left: 0;
+    top: 20;
+    height: 100%;
+    width: 100%;
+}
+.centerimg2 { 
+    position: relative;
+    left: 0;
+    top: 20;
+    height: 100%;
+    width: 50%;
+}
+```
+
+
+2018經濟播客
+=====
+
+Column
+-----------------------------------------------------------------------
+
+### 咘咘驚心
+
+
+```{r, echo=F}
+bitlyRequest("https://youtu.be/N2Vd2auic4c",QRcodeShow = F) -> bitlyURL
+bitlyURL %>% ggqrcode %>% 
+ggsave("img/group1qr.png",plot=.)
+div(
+ HTML('
+<video class="centerimg" poster="img/group1.png" controls>
+  <source src="videos/group1.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+'),
+div(
+  img(src="img/group1qr.png",class="centerimg2")
+)
+)
+```
+
+Column
+-----------------------------------------------------------------------
+
+### 今世經緣
+
+```{r}
+bitlyRequest("https://youtu.be/5T9qRQfeN3o",QRcodeShow = F) -> bitlyURL
+bitlyURL %>% ggqrcode %>% 
+ggsave("img/group2qr.png",plot=.)
+div(
+HTML('
+<video class="centerimg" poster="img/group2.png" controls>
+  <source src="videos/group2.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+'),div(
+  img(src="img/group2qr.png",class="centerimg2")
+))
+
+```
+
+Column
+-----------------------------------------------------------------------
+
+### 我又來拿獎金了
+
+```{r}
+bitlyRequest("https://youtu.be/2xGC8Dv8Kg8",QRcodeShow = F) -> bitlyURL
+bitlyURL %>% ggqrcode %>% 
+ggsave("img/group3qr.png",plot=.)
+div(HTML('
+<video class="centerimg" poster="img/group3.png" controls>
+  <source src="videos/group3.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+'),div(
+  img(src="img/group3qr.png",class="centerimg2")
+))
+```
+
+Column
+----
+
+### Bootstrap sample
+
+```{r}
+div(class="card text-center",
+  div("經濟學無用？有用？",class="card-header"),
+  div(class="card-body",
+    h6(class="card-title","by 我又來拿獎金"),
+    br(),
+    tag("video",
+        list(
+          class="centerimg",
+          poster="img/group3.png",
+          controls="",
+          tag("source",
+              list(
+                src="videos/group3.mp4",
+                type="video/mp4"
+              ))
+        )),br(),
+    p(class="card-text",br(),"台前父女拍擋 ， 台下關係決裂
+魔法爸爸 如何經歷愛的奇蹟?
+程子材(江華飾)，於新加坡一間擁有逾萬信徒的基督教會事奉。程與妻子美蘭(龔慈恩飾)不但熱心投身福音事工，程更同時是一名魔術師，透過魔術作為橋樑領人信主。程自信是上帝一個稱職的僕人，直至她的女兒愛珊(黃明慧飾)告訴他：「爸爸，我懷孕了！」
+20歲的愛珊未婚懷孕。作為牧師，程素以排解別人家庭問題而見稱，但當自己家庭出現問題之際，程又可以如何解決﹖一向挑剔程「雙重身份」的人，亦以此為話柄，趁勢攻擊程，令他在社會上的威信受損。程開始懷疑自己：作為牧師，又當魔術師，我是否真的做錯了﹖", style="font-size: 24px"),br(),
+    div(class="rounded border border-success",
+        "掃我按讚抽獎",br(),
+        img(src="img/group3qr.png",class="centerimg2")
+        )
+  ),
+  div(class="card-footer text-muted","掃我按讚抽獎")
+) 
+```
+

@@ -1,0 +1,5 @@
+"0","bitlyRequest(""https://youtu.be/N2Vd2auic4c"",QRcodeShow = F) -> bitlyURL"
+"0","bitlyURL %>% ggqrcode %>% "
+"0","ggsave(""img/group1qr.png"",plot=.)"
+"2","Saving 7 x 7 in image
+"

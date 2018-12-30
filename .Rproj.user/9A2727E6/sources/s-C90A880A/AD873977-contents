@@ -1,0 +1,128 @@
+---
+title: "社會科學院"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    css: css/style.css
+    includes:
+      in_header: header.html
+params:
+  gsEventID: "1Ampe6kDzKomv4-YlOW0HZwxlUyCVZygQMg_1F3pn4Io"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,eval=T)
+
+library(flexdashboard); library(htmltools); library(stringr)
+source("/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R")
+source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R")
+library(htmltools); library(rlang); library(googlesheets); library(lubridate)
+gs_auth()
+params$gsEventID %>%
+  gs_key %>%
+  gs_read(ws="Form Responses 1") -> eventDF
+eventDF %>%
+  mutate(
+    日期=mdy(日期)
+  ) %>% 
+  arrange(日期) -> eventDF
+```
+
+
+```{css css}
+.centerimg { 
+    position: absolute;
+    left: 0;
+    top: 20;
+    height: 100%;
+    width: 100%;
+}
+.hero {
+  align-items: center;
+  height: auto;
+  min-width: 0;
+}
+
+img2 {
+  width: 450px;
+  max-width: 100%;
+  max-height: 351px;
+}
+
+#latestEvents > .chart-title {
+    background-color: #e36851;
+    color: white;
+}
+#USR > .chart-title {
+    color: #ffffff;
+    background-color: #28a745;
+}
+
+/* 移除navigation bar */
+
+body {
+  padding-top: 0px
+}
+
+.navbar{
+  visibility: hidden
+}
+```
+
+社科院訊息
+====
+
+
+USR新聞 {data-width=300}
+-----------------------------------------------------------------------
+
+### <i class="fas fa-hands-helping"></i> USR 園地 {#USR}
+
+```{r}
+"http://usrsoc.ntpu.edu.tw/news.html" %>%
+  usrwebcrawl %>% usrnewsCard
+```
+
+近期活動  {data-width=400}
+-----------------------------------------------------------------------
+
+### <i class="fa fa-calendar" aria-hidden="true"></i> 近期活動 {#latestEvents}
+
+```{r,eval=F}
+source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R")
+event_schedule_scroll(eventDF) -> eventScheduleScroll
+eventScheduleScroll %>%
+  writeLines("html_scrollschedule.txt")
+eventScheduleScroll %>%
+  {eval(parse(text=.))}
+```
+
+```{r}
+source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R")
+event_schedule(eventDF)  %>%
+  {eval(parse(text=.))}
+```
+
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+### 你的訊息QR
+
+```{r,echo=F}
+"https://www.facebook.com/usrsocntpu/posts/320250995487704" %>%
+  bitlyRequest() 
+```
+
+### 互動看板使用方法
+
+1. 用手按壓你有興趣的訊息。
+
+2. 看板「你的訊息QR」區塊會出現對應QRcode。
+
+3. 拿起你的手機掃瞄QRcode即可回去慢慢享用。
+
+#### A1
+
+#### A2

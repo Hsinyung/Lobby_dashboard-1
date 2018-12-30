@@ -1,0 +1,4 @@
+"0","source(""/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R"")"
+"0","eventDF %>%"
+"0","  event_tagList(.newEventItem,.startEventContainer,.newEventSeparator,.endOfEventClosure) %>% #writeLines(""html_test.txt"")"
+"0","  {eval(parse(text=.))}"

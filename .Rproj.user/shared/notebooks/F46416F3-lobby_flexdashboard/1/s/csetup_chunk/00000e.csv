@@ -1,0 +1,75 @@
+"0","knitr::opts_chunk$set(echo = F,eval=T)"
+"0",""
+"0","library(flexdashboard); library(htmltools); library(stringr)"
+"0","source(""/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R"")"
+"0","source(""/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R"")"
+"0","library(htmltools); library(rlang); library(googlesheets); library(lubridate)"
+"0","gs_auth()"
+"2","Auto-refreshing stale OAuth token.
+"
+"0","params$gsEventID %>%"
+"0","  gs_key %>%"
+"0","  gs_read(ws=""Form Responses 1"") -> eventDF"
+"2","Sheet successfully identified: ""社科大廳活動管理系統""
+"
+"2","Accessing worksheet titled 'Form Responses 1'.
+"
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"1","Downloading: "
+"1",""
+"1","1 kB"
+"1",""
+"1","     "
+"2","Parsed with column specification:
+cols(
+  Timestamp = col_character(),
+  `活動名稱（勿超過11個中文字）` = col_character(),
+  日期 = col_character(),
+  時間 = col_character(),
+  地點 = col_character(),
+  活動相關網址連結 = col_character(),
+  活動內容說明 = col_character(),
+  `Email Address` = col_character(),
+  主講人或主辦機構 = col_character(),
+  主講人現職 = col_character()
+)
+"
+"0","eventDF %>%"
+"0","  mutate("
+"0","    日期=mdy(日期)"
+"0","  ) %>% "
+"0","  arrange(日期) -> eventDF"

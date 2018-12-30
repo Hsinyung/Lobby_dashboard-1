@@ -1,0 +1,137 @@
+
+# Event container
+  div(class="container content-wrap",
+    div(class="masonry-grid",
+    p(class="card-tag",
+              tag("i",
+                  list(
+                    class="fa fa-calendar",
+                    `aria-hidden`="true"
+                    )
+                  ),
+              "近期活動"
+              ),
+        div(class="event-card card-calendar",
+div(class="calendar-item masonry-item",
+                div(class="event-date",
+                    div(class="date-only",
+                        div(class="month",
+                            "1月"),
+                        div(class="day",
+                            "3"),
+                        div(class="clearbox")
+                        )
+                    )
+,                div(class="event-info",
+                    a(class="event-title",
+                      href="http://www.ntpu.edu.tw/ctd/index.php",
+                      h3("演講：文化脈絡下的家庭動力關係")
+                      ),                  p(class="event-details",
+                      span(class="time",
+                           tag("i",
+                               list(
+                                 class="fa fa-clock",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "09:10"),br(),
+                      span(class="location",
+                           tag("i",
+                               list(
+                                 class="fa fa-globe",
+                                  `aria-hidden`="true")
+                               ),
+                           "社2F01"),br(),
+                      span(class="speaker",
+                           tag("i",
+                               list(
+                                 class="fas fa-chalkboard-teacher",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "黃菁瑜老師"),br(),
+                      span(class="association",
+                           tag("i",
+                               list(
+                                 class="fas fa-university",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "英國Bournemouth大學 助理教授")),                        div(class="clearbox")
+                    )),div(class="calendar-item masonry-item",
+                div(class="event-date",
+                    div(class="date-only",
+                        div(class="month",
+                            "1月"),
+                        div(class="day",
+                            "10"),
+                        div(class="clearbox")
+                        )
+                    )
+,                div(class="event-info",
+                    a(class="event-title",
+                      href="https://www.facebook.com/%E8%B3%87%E6%96%99%E7%A7%91%E5%AD%B8%E6%87%89%E7%94%A8%E5%89%B5%E6%96%B0%E9%BB%91%E5%AE%A2%E6%9D%BE%E7%AB%B6%E8%B3%BD-2329576390451183/?__xts__[0]=68.ARCNKKgVfCNgoprQdFm3yie37C29UnXmzECambX6zn_FbXuVe0Di642cs_ySZavpx8WxH7U1ikF-IdWMCGZNKtHm0S74Mj9bsFOV7QO9ewLv8q1SN1Qmwu0IrMtDByR0UPWfsMVbmlYtnkyxvR_Y8qfD_gLn7kNWjQpvcNLAYwL4gKctmXiN98oBlKDWupY7WbcPjuWc5in8cJpp_RGpw58aCpRk2ipKGQKYo0xwET35G3kZZ_4qVwDFaoQX3h25bBN2rymkj3DVpjIHZ4Tn6gv0FgKWkN9AjpAqv145qR743_gEoDu9lOXZ-UuCktc4OkrJ3tbgL3WR15-lAet8ajMTYDE",
+                      h3("NTPU資料科學應用創新黑客松競賽說明會")
+                      ),                  p(class="event-details",
+                      span(class="time",
+                           tag("i",
+                               list(
+                                 class="fa fa-clock",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "12:10-13:30"),br(),
+                      span(class="location",
+                           tag("i",
+                               list(
+                                 class="fa fa-globe",
+                                  `aria-hidden`="true")
+                               ),
+                           "創新創業中心")),                        div(class="clearbox")
+                    )),div(class="calendar-item masonry-item",
+                div(class="event-date",
+                    div(class="date-only",
+                        div(class="month",
+                            "1月"),
+                        div(class="day",
+                            "12"),
+                        div(class="clearbox")
+                        )
+                    )
+,                div(class="event-info",
+                    a(class="event-title",
+                      href="#",
+                      h3("演講：當前刑事政策改革方向--完成與未完成的使命")
+                      ),                  p(class="event-details",
+                      span(class="time",
+                           tag("i",
+                               list(
+                                 class="fa fa-clock",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "09:30"),br(),
+                      span(class="location",
+                           tag("i",
+                               list(
+                                 class="fa fa-globe",
+                                  `aria-hidden`="true")
+                               ),
+                           "台北校區教學大樓715教室"),br(),
+                      span(class="speaker",
+                           tag("i",
+                               list(
+                                 class="fas fa-chalkboard-teacher",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "邱太三"),br(),
+                      span(class="association",
+                           tag("i",
+                               list(
+                                 class="fas fa-university",
+                                  `aria-hidden`="true"
+                                 )
+                               ),
+                           "前法務部長")),                        div(class="clearbox")
+                    )))))

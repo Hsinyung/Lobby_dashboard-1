@@ -1,0 +1,61 @@
+"0","library(flexdashboard); library(htmltools); library(stringr)"
+"0","source(""/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R"")"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"2","
+Attaching package: ‘lubridate’
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    date
+
+"
+"2","Loading required package: httr
+"
+"2","Loading required package: rlist
+"
+"0","source(""/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R"")"
+"2","Loading required package: xml2
+"
+"2","
+Attaching package: ‘rvest’
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    pluck
+
+"
+"0","library(htmltools)"
+"0","library(ggplot2)"
+"0","library(tidyr)"
+"0","library(qrcode)"
+"0","ggqrcode <- function(text, color=""black"", alpha=1) {"
+"0","    pkg <- ""qrcode"""
+"0","    require(pkg, character.only = TRUE)"
+"0","    x <- qrcode_gen(text, plotQRcode=F, dataOutput=T)"
+"0","    x <- as.data.frame(x)"
+"0",""
+"0","    y <- x"
+"0","    y$id <- rownames(y)"
+"0","    y <- gather_(y, ""key"", ""value"", colnames(y)[-ncol(y)])"
+"0","    y$key = factor(y$key, levels=rev(colnames(x)))"
+"0","    y$id = factor(y$id, levels=rev(rownames(x)))"
+"0",""
+"0","    ggplot(y, aes_(x=~id, y=~key)) + geom_tile(aes_(fill=~value), alpha=alpha) +"
+"0","        scale_fill_gradient(low=""white"", high=color) +"
+"0","        theme_void() + theme(legend.position='none')"
+"0","}"
