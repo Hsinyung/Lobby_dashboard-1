@@ -2,7 +2,7 @@
 # 抓取官網最近文章 ----------------------------------------------------------------
 
 library("rvest"); library("dplyr");
-url <-"http://usrsoc.ntpu.edu.tw/news.html"
+url <-"http://usrsoc.ntpu.edu.tw/index.html"
 
 usrwebcrawl<-function(url){
   url %>% read_html -> usrweb
@@ -21,11 +21,18 @@ usrwebcrawl<-function(url){
   usrweb %>%
     html_node("#flex-newpost p") %>%
     html_text -> usrweb.content
+   
+  usrweb %>%
+    html_node("#firstnews") %>%
+    html_attr("href") %>%
+    {paste0("http://usrsoc.ntpu.edu.tw",.)} ->
+    usrweb.newsurl
   return(
     list(
       imgsrc=usrweb.img,
       title=usrweb.title,
-      content=usrweb.content
+      content=usrweb.content,
+      newsurl=usrweb.newsurl
     )
   )
 }
@@ -44,9 +51,16 @@ usrnewsCard<-function(usrnews){
           br(),
           tag("button",
               list(
+                "按我看更多...",
                 type="button",
-                class="btn btn-primary",
-                "按我看更多..."
+                class="btn btn-success",
+                `data-toggle`="modal", 
+                `data-target`="#exampleModal",
+                onclick=paste0(
+                  "postqr2modal('",
+                  usrnews$newsurl,
+                  "')"
+                )
               )
           )
       )

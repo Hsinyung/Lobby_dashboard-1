@@ -7,6 +7,7 @@ output:
     css: css/style.css
     includes:
       in_header: header.html
+    self_contained: FALSE
 params:
   gsEventID: "1Ampe6kDzKomv4-YlOW0HZwxlUyCVZygQMg_1F3pn4Io"
 ---
@@ -68,7 +69,16 @@ body {
 .navbar{
   visibility: hidden
 }
+
+#qrcode {
+  width:160px;
+  height:160px;
+  margin-top:15px;
+}
 ```
+
+
+
 
 社科院訊息
 ====
@@ -100,9 +110,15 @@ html_eventSchedule %>%
 Column {data-width=300}
 -----------------------------------------------------------------------
 
-### 你的訊息QR
+### 你的訊息QR 
 
-```{r,echo=F}
+```{r, eval=FALSE}
+div(id="qrcode")
+```
+
+
+
+```{r,eval=F,echo=F}
 "https://www.facebook.com/usrsocntpu/posts/320250995487704" %>%
   bitlyRequest() 
 ```
@@ -115,6 +131,47 @@ Column {data-width=300}
 
 3. 拿起你的手機掃瞄QRcode即可回去慢慢享用。
 
-#### A1
+```{r }
+HTML('
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">請掃此QR code取得你有興趣的訊息</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-qrcode">    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>   
+')
+ 
+```
 
-#### A2
+```{js modal timeout}
+$(function(){
+    $('#exampleModal').on('show.bs.modal', function(){
+        var myModal = $(this);
+        clearTimeout(myModal.data('hideInterval'));
+        myModal.data('hideInterval', setTimeout(function(){
+            myModal.modal('hide');
+        }, 3000));
+    });
+});
+```
+
+```{js js postqr2modal}
+function postqr2modal(url){
+document.getElementById("modal-qrcode").innerHTML=""; 
+new QRCode(document.getElementById("modal-qrcode"), url);
+
+}
+```
+
