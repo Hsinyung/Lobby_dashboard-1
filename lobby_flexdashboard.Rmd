@@ -17,10 +17,10 @@ params:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F,eval=T)
 
-library(flexdashboard); library(htmltools); library(stringr)
+library(flexdashboard); library(htmltools); library(stringr); library(dplyr)
 source("/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R")
 source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R")
-library(htmltools); library(rlang); library(googlesheets); library(lubridate)
+library(htmltools); library(rlang); library(googlesheets); library(lubridate); library(dplyr)
 gs_auth()
 params$gsEventID %>%
   gs_key -> gsInfoKey
@@ -30,6 +30,7 @@ eventDF %>%
   mutate(
     日期=mdy(日期)
   ) %>% 
+  filter(日期>=Sys.Date()) %>%
   arrange(日期) -> eventDF
 
 for(i in seq_along(eventDF$活動相關網址連結)){
@@ -43,7 +44,14 @@ for(i in seq_along(eventDF$活動相關網址連結)){
 
 gsInfoKey %>%
   gs_read(ws="Form Responses 2") -> posterDF
-
+posterDF %>%
+  mutate(
+    海報上架日期=mdy(海報上架日期),
+    海報下架日期=mdy(海報下架日期)
+  ) %>%
+  filter(海報上架日期<=Sys.Date(),
+               海報下架日期>=Sys.Date()) ->
+  posterDF
 ```
 
 
@@ -157,8 +165,42 @@ Column {data-width=350}
 
 ### 動態消息 {data-height=800, .no-title .flexslider}
 
+```{r poster-html, echo=F}
+# i<-1
+# poster_i <- posterDF[i,]
 
-```{r poster-html}
+poster_i_tags<-function(poster_i){
+  poster_i$`海報「圖檔」連結網址` -> posterURL
+  poster_i$`海報「活動內容」網址` %>% bitlyRequest(QRcodeShow = F) ->
+  posterDetailURL
+  poster_i$海報主題 -> posterTitle
+  
+  ## tags creation ##
+  tag("li",
+      list(
+        img(src=posterURL,
+            class="slide-image-class",
+            `data-toggle`="modal", 
+            `data-target`="#exampleModal",
+            onclick=paste0("postqr2modal('",posterDetailURL,"')")
+            ),
+        p(class="flex-caption",posterTitle)        
+      )
+      )
+}
+library(htmltools)
+#tagOut<-vector("list",nrow(posterDF))
+#poster_i_tags(poster_i) -> tagOut[[i]]
+map(1:nrow(posterDF),function(i) poster_i_tags(posterDF[i,])) -> posterTags
+posterTags$class <- "slides" # class for ul
+posterTags %>%
+  tag("ul",
+      .) -> flexSliderUl
+flexSliderUl %>% as.character %>% #writeLines("flexSliderUl.html")
+  HTML
+```
+
+```{r, eval=F}
 HTML('
 <!-- Place somewhere in the <body> of your page -->
 <!-- <div class="flexslider"> -->
@@ -186,13 +228,21 @@ $(window).load(function() {
 });
 ```
 
+```{js js-flexsliderOnclick, include=FALSE}
+$(function() { 
+  $('.slide-image-class').on('click', function() {
+    //Fire the lighbox code.
+    postqr2modal('http://bit.ly/2Vl9Hea')
+  });
+});
+```
+
+
 ### 互動看板使用方法 {data-height=200}
 
 1. 用手按壓你有興趣的訊息。
 
-2. 看板「你的訊息QR」區塊會出現對應QRcode。
-
-3. 拿起你的手機掃瞄QRcode即可回去慢慢享用。
+2. 訊息詳情QRcode即會浮現。
 
 ```{r modal}
 HTML('

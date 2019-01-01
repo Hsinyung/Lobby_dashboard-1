@@ -23,9 +23,8 @@
 # event-title -----------------------------------------------------------
 
 .eventTitleTag <-'
-                    a(class="event-title",
-                      href=".eventHref",
-                      h3(".eventTitle")
+                    div(class="event-title",
+                      h4(".eventTitle")
                       )'
 
 
@@ -178,7 +177,7 @@ newEventTag<-function(DF_i){
     
     paste0(.eventDateTag,",",.eventInfoTag) %>%
       paste0(
-        'div(class="calendar-item masonry-item"',
+        'div(class="calendar-item masonry-item", `data-toggle`="modal", `data-target`="#exampleModal", onclick="postqr2modal(\'.eventHref\')"',
         ",",
         .,
         ")"
