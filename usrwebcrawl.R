@@ -2,7 +2,7 @@
 # 抓取官網最近文章 ----------------------------------------------------------------
 
 library("rvest"); library("dplyr");
-url <-"http://usrsoc.ntpu.edu.tw/index.html"
+url <-"http://usrsoc.ntpu.edu.tw/news.html"
 
 usrwebcrawl<-function(url){
   url %>% read_html -> usrweb
@@ -23,7 +23,7 @@ usrwebcrawl<-function(url){
     html_text -> usrweb.content
    
   usrweb %>%
-    html_node("#firstnews") %>%
+    html_node("#latestnews") %>%
     html_attr("href") %>%
     {paste0("http://usrsoc.ntpu.edu.tw",.)} ->
     usrweb.newsurl

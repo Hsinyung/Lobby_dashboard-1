@@ -4,7 +4,9 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    css: css/style.css
+    css: ["css/style.css", "css/flexslider.css", "css/flexslider-rtl.css",
+    "css/flexslider-rtl-min.cs",
+    "css/shCore.css","css/shThemeDefault.css"]
     includes:
       in_header: header.html
     self_contained: FALSE
@@ -21,13 +23,27 @@ source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R")
 library(htmltools); library(rlang); library(googlesheets); library(lubridate)
 gs_auth()
 params$gsEventID %>%
-  gs_key %>%
+  gs_key -> gsInfoKey
+gsInfoKey %>%
   gs_read(ws="Form Responses 1") -> eventDF
 eventDF %>%
   mutate(
     日期=mdy(日期)
   ) %>% 
   arrange(日期) -> eventDF
+
+for(i in seq_along(eventDF$活動相關網址連結)){
+  ifelse(is.na(eventDF$活動相關網址連結[[i]]),
+         NA,
+         bitlyRequest(
+           eventDF$活動相關網址連結[[i]],
+           QRcodeShow = F)
+         )->eventDF$活動相關網址連結[[i]]
+}
+
+gsInfoKey %>%
+  gs_read(ws="Form Responses 2") -> posterDF
+
 ```
 
 
@@ -45,10 +61,24 @@ eventDF %>%
   min-width: 0;
 }
 
-img2 {
-  width: 450px;
-  max-width: 100%;
-  max-height: 351px;
+/* flexslider */
+
+.flex-caption {
+  width: 100%;
+  padding: 2%;
+  margin-top: 1%;
+  left: 0;
+  bottom: 0;
+  background: white;
+  color: rgba(0,0,0,.5);
+  /*text-shadow: 0 -1px 0 rgba(0,0,0,.3);*/
+  font-size: 16px;
+  text-align: center;
+  line-height: 18px;
+}
+
+.flexslider img {
+  object-fit: contain;
 }
 
 #latestEvents > .chart-title {
@@ -75,6 +105,19 @@ body {
   height:160px;
   margin-top:15px;
 }
+
+/* 動態消息 */
+#dynamic-poster + .chart-title{
+    color: #ffffff;
+    background-color: red;
+    font-weight: 500;
+    border-bottom: 1px solid #d7d7d7;
+    color: #666;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 7px 10px 4px;
+}
+
 ```
 
 
@@ -91,10 +134,12 @@ USR新聞 {data-width=300}
 
 ```{r}
 "http://usrsoc.ntpu.edu.tw/news.html" %>%
-  usrwebcrawl %>% usrnewsCard
+  usrwebcrawl -> usrcontent
+usrcontent$newsurl %>% bitlyRequest(QRcodeShow = F) -> usrcontent$newsurl
+usrcontent %>% usrnewsCard
 ```
 
-近期活動  {data-width=400}
+近期活動  {data-width=350}
 -----------------------------------------------------------------------
 
 ### <i class="fa fa-calendar" aria-hidden="true"></i> 近期活動 {#latestEvents}
@@ -107,23 +152,41 @@ html_eventSchedule %>%
 ```
 
 
-Column {data-width=300}
+Column {data-width=350}
 -----------------------------------------------------------------------
 
-### 你的訊息QR 
+### 動態消息 {data-height=800, .no-title .flexslider}
 
-```{r, eval=FALSE}
-div(id="qrcode")
+
+```{r poster-html}
+HTML('
+<!-- Place somewhere in the <body> of your page -->
+<!-- <div class="flexslider"> -->
+  <ul class="slides">
+    <li>
+      <img src="https://scontent.ftpe7-4.fna.fbcdn.net/v/t1.0-9/48360142_2330261323716023_5908650839127359488_o.jpg?_nc_cat=105&_nc_ht=scontent.ftpe7-4.fna&oh=e4ca34c61e2a74980810cdc4ab177e75&oe=5CD4B19A" />
+      <p class="flex-caption">Adventurer Lemon</p>
+    </li>
+    <li>
+      <img src="https://i.imgur.com/HTyydAb.jpg" style="object-fit: contain;" />
+      <p class="flex-caption">Adventurer Donut</p>
+    </li>
+  </ul>
+<!-- </div> -->
+')
 ```
 
 
-
-```{r,eval=F,echo=F}
-"https://www.facebook.com/usrsocntpu/posts/320250995487704" %>%
-  bitlyRequest() 
+```{js js-flexslider}
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide"
+  });
+});
 ```
 
-### 互動看板使用方法
+### 互動看板使用方法 {data-height=200}
 
 1. 用手按壓你有興趣的訊息。
 
@@ -131,7 +194,7 @@ div(id="qrcode")
 
 3. 拿起你的手機掃瞄QRcode即可回去慢慢享用。
 
-```{r }
+```{r modal}
 HTML('
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -150,7 +213,7 @@ HTML('
       </div>
     </div>
   </div>
-</div>   
+<!-- </div>  --> 
 ')
  
 ```
@@ -167,11 +230,23 @@ $(function(){
 });
 ```
 
-```{js js postqr2modal}
+```{js postqr2modal}
 function postqr2modal(url){
-document.getElementById("modal-qrcode").innerHTML=""; 
-new QRCode(document.getElementById("modal-qrcode"), url);
+document.getElementById("modal-qrcode").innerHTML="";
+if (url=="#") {
+  //  block of code to be executed if the condition is true
+  document.getElementById("modal-qrcode").innerHTML="無更多訊息";
+
+} else { 
+  //  block of code to be executed if the condition is false
+  new QRCode(document.getElementById("modal-qrcode"), url);
 
 }
+
+}
+```
+
+```{js remove max-height}
+$('.flexslider .slides img').css({"max-height" : "600"});
 ```
 
