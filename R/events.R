@@ -190,7 +190,7 @@ newEventTag<-function(DF_i){
           "(\\.day)"=day(DF_i$日期),
           "(\\.eventTime)"=DF_i$時間,
           "(\\.eventHref)"=ifelse(is.na(DF_i$活動相關網址連結),"#",DF_i$活動相關網址連結),
-          "(.eventTitle)"=DF_i$`活動名稱（勿超過11個中文字）`   )
+          "(.eventTitle)"=DF_i$`活動名稱`   )
       ) -> .eventNewItemTag  
   return(.eventNewItemTag)
 }

@@ -18,14 +18,14 @@ params:
 knitr::opts_chunk$set(echo = F,eval=T)
 
 library(flexdashboard); library(htmltools); library(stringr); library(dplyr)
-source("/Users/martin/Desktop/GitHub/My-functions/DataScienceTeaching/R/apiResources.R")
-source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/usrwebcrawl.R")
+source("R/apiResources.R")
+source("usrwebcrawl.R")
 library(htmltools); library(rlang); library(googlesheets); library(lubridate); library(dplyr)
 gs_auth()
 params$gsEventID %>%
   gs_key -> gsInfoKey
 gsInfoKey %>%
-  gs_read(ws="Form Responses 1") -> eventDF
+  gs_read(ws="活動") -> eventDF
 eventDF %>%
   mutate(
     日期=mdy(日期)
@@ -43,7 +43,7 @@ for(i in seq_along(eventDF$活動相關網址連結)){
 }
 
 gsInfoKey %>%
-  gs_read(ws="Form Responses 2") -> posterDF
+  gs_read(ws="海報") -> posterDF
 posterDF %>%
   mutate(
     海報上架日期=mdy(海報上架日期),
@@ -154,9 +154,19 @@ usrcontent %>% usrnewsCard
 
 ```{r}
 source("/Users/martin/Desktop/GitHub/NTPUSOC/Lobby_dashboard/R/events.R")
-event_schedule(eventDF)  -> html_eventSchedule
-html_eventSchedule %>%
-  {eval(parse(text=.))}
+if( nrow(eventDF) !=0 ){
+  event_schedule(eventDF)  -> html_eventSchedule
+  html_eventSchedule %>%
+    {eval(parse(text=.))}
+  
+} else {
+  HTML('
+<div>
+<p>近期無活動</p>
+</div>
+     ')
+
+}
 ```
 
 
@@ -177,7 +187,7 @@ poster_i_tags<-function(poster_i){
   
   ## tags creation ##
   tag("li",
-      list(
+      list(width="110%",
         img(src=posterURL,
             class="slide-image-class",
             `data-toggle`="modal", 
@@ -191,31 +201,21 @@ poster_i_tags<-function(poster_i){
 library(htmltools)
 #tagOut<-vector("list",nrow(posterDF))
 #poster_i_tags(poster_i) -> tagOut[[i]]
-map(1:nrow(posterDF),function(i) poster_i_tags(posterDF[i,])) -> posterTags
-posterTags$class <- "slides" # class for ul
-posterTags %>%
-  tag("ul",
-      .) -> flexSliderUl
-flexSliderUl %>% as.character %>% #writeLines("flexSliderUl.html")
-  HTML
-```
+if(nrow(posterDF) !=0){
+  map(1:nrow(posterDF),function(i) poster_i_tags(posterDF[i,])) -> posterTags
+  posterTags$class <- "slides" # class for ul
+  posterTags %>%
+    tag("ul",
+        .) -> flexSliderUl
+  flexSliderUl %>% as.character %>% #writeLines("flexSliderUl.html")
+    HTML  
+} else {
+HTML('<div>
+<p>近期無活動</p>
+</div>
+') 
+}
 
-```{r, eval=F}
-HTML('
-<!-- Place somewhere in the <body> of your page -->
-<!-- <div class="flexslider"> -->
-  <ul class="slides">
-    <li>
-      <img src="https://scontent.ftpe7-4.fna.fbcdn.net/v/t1.0-9/48360142_2330261323716023_5908650839127359488_o.jpg?_nc_cat=105&_nc_ht=scontent.ftpe7-4.fna&oh=e4ca34c61e2a74980810cdc4ab177e75&oe=5CD4B19A" />
-      <p class="flex-caption">Adventurer Lemon</p>
-    </li>
-    <li>
-      <img src="https://i.imgur.com/HTyydAb.jpg" style="object-fit: contain;" />
-      <p class="flex-caption">Adventurer Donut</p>
-    </li>
-  </ul>
-<!-- </div> -->
-')
 ```
 
 
@@ -228,14 +228,6 @@ $(window).load(function() {
 });
 ```
 
-```{js js-flexsliderOnclick, include=FALSE}
-$(function() { 
-  $('.slide-image-class').on('click', function() {
-    //Fire the lighbox code.
-    postqr2modal('http://bit.ly/2Vl9Hea')
-  });
-});
-```
 
 
 ### 互動看板使用方法 {data-height=200}
@@ -275,7 +267,7 @@ $(function(){
         clearTimeout(myModal.data('hideInterval'));
         myModal.data('hideInterval', setTimeout(function(){
             myModal.modal('hide');
-        }, 3000));
+        }, 8000));
     });
 });
 ```
@@ -297,6 +289,10 @@ if (url=="#") {
 ```
 
 ```{js remove max-height}
-$('.flexslider .slides img').css({"max-height" : "600"});
+$('.flexslider .slides img').css({"max-height" : "425px"});
+```
+
+```{js remove scrolling}
+document.body.style.overflow = 'hidden';
 ```
 

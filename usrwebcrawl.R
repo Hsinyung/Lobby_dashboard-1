@@ -39,15 +39,24 @@ usrwebcrawl<-function(url){
 
 usrnewsCard<-function(usrnews){
   div(class="card",style="max-width: 500px;",
-      img(class="card-img-top", 
-          src=usrnews$imgsrc, 
-          alt="Card image cap"
-      ),
+      if(usrcontent$imgsrc!=""){
+        img(class="card-img-top", 
+            src=usrnews$imgsrc, 
+            alt="Card image cap"
+        )       
+      } else {
+        NULL
+      }
+,
       div(class="card-body",
           h5(class="card-title",
              usrnews$title),
           p(class="card-text",
-            usrnews$content),
+            if(usrcontent$imgsrc!=""){
+              str_trunc(usrnews$content,300,side="right")
+          } else {
+              str_trunc(usrnews$content,500,side="right")
+          }),
           br(),
           tag("button",
               list(
