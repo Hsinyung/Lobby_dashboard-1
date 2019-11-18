@@ -1,0 +1,58 @@
+---
+title: "Imgur upload api"
+author: "林茂廷"
+date: "11/18/2019"
+output: html_document
+params:
+  posterPath: "UFO"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate); library(dplyr)
+# conda_python("m-team") #%>% print()
+use_python("/anaconda3/envs/m-team/bin/python",required=T)
+use_condaenv("m-team",required = T)
+```
+
+```{r}
+conda_install("m-team","imgurpython", pip=TRUE)
+```
+
+```{python}
+import os
+os.pardir
+list_posters=os.listdir('UFO')
+list_posters
+```
+
+
+```{python}
+from imgurpython import ImgurClient
+
+client_id = 'a3ed1564f55fb1c'
+client_secret = 'e64c289b7830a2901e2b401448ee356376c4b3ad'
+
+client = ImgurClient(client_id, client_secret)
+
+# Example request
+items = client.gallery()
+for item in items:
+    print(item.link)
+
+```
+
+```{python}
+filepath_poster_i='/'.join(['UFO',list_posters[0]])
+```
+
+
+```{python}
+result=client.upload_from_path(filepath_poster_i)
+```
+
+```{python}
+result.keys()
+result.get('link')
+```
+
